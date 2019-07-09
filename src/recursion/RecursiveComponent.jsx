@@ -1,13 +1,22 @@
 import React, { Component } from 'react';
 
 export default class RecursiveComponent extends Component {
+  state = {components: this.props.components};
 
-	// write recursive method here
+  renderTree = (components = []) => {
+    if (components.length === 0) {
+      return;
+    }
+
+    const Component = components[0]
+    components.shift();
+    return (<Component>{this.renderTree(components)}</Component>)
+  }
 
   render() {
     return (
       <div>
-        {/* invoke recursive method here */}
+        {this.renderTree(this.state.components)}
       </div>
     );
   }
